@@ -20,5 +20,10 @@ return {
         end)
         -- vim.keymap.set("n", "<leader>pb", builtin.buffers, {})
         vim.keymap.set("n", "<leader>ph", builtin.help_tags, {})
+
+        -- send results to quickfix list
+        vim.keymap.set("n", "<C-q>", function ()
+            builtin.smart_send_to_qflist()
+        end)
     end
 }

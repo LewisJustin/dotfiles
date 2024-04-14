@@ -14,6 +14,17 @@ return {
         -- "j-hui/fidget.nvim", -- UI diagnostics of what's going on
     },
     config = function()
+        -- keybind to kill lsp
+        vim.keymap.set("n", "<leader>lk",
+            function()
+                local clients = vim.lsp.get_active_clients()
+
+                for _, client in pairs(clients) do
+                    client.stop()
+                end
+            end
+        )
+
         local cmp = require("cmp")
         local cmd_lsp = require("cmp_nvim_lsp")
 
@@ -25,7 +36,10 @@ return {
         )
 
         -- require("fidget").setup()
-        require("mason").setup()
+        require("mason").setup({
+            ensure_installed = {
+            }
+        })
 
         require("mason-lspconfig").setup({
             ensure_installed = {
@@ -49,6 +63,14 @@ return {
                                     globals = { "vim", "it", "describe", "before_each", "after_each" }
                                 }
                             }
+                        }
+                    })
+                end,
+                ["clangd"] = function()
+                    require("lspconfig").clangd.setup({
+                        cmd = {
+                            "clangd",
+                            "--fallback-style=WekKit",
                         }
                     })
                 end,

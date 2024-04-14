@@ -5,6 +5,12 @@ vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
 vim.keymap.set("t", "<C-K>", "<C-\\><C-N><C-w>k")
 vim.keymap.set("t", "<C-q>", "<C-\\><C-N>:q<CR>")
 
+-- arrows resize windows
+vim.keymap.set("n", "<Up>", ":resize +2<CR>")
+vim.keymap.set("n", "<Down>", ":resize -2<CR>")
+vim.keymap.set("n", "<Left>", ":vertical resize -2<CR>")
+vim.keymap.set("n", "<Right>", ":vertical resize +2<CR>")
+
 -- open
 vim.keymap.set("n", "<leader>ot", ":split term://bash<CR>a")
 -- source $MYVIMRC
@@ -47,7 +53,9 @@ vim.keymap.set("n", "Q", "<nop>")
 
 -- vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 -- format buffer
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+vim.keymap.set("n", "<leader>f", function()
+    vim.lsp.buf.format()
+end)
 
 -- quick fix list navigation
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
