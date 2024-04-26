@@ -70,7 +70,7 @@ return {
                     require("lspconfig").clangd.setup({
                         cmd = {
                             "clangd",
-                            "--fallback-style=WekKit",
+                            "--offset-encoding=utf-16",
                         }
                     })
                 end,

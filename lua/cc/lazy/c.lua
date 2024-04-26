@@ -8,7 +8,13 @@ return { { -- formatter
                 null_ls.builtins.formatting.clang_format,
             }
         }
-    end
+    end,
+    config = function()
+    -- format buffer
+    vim.keymap.set("v", "<leader>f", function()
+        vim.lsp.buf.format()
+    end)
+    end,
 }, {
         "mfussenegger/nvim-dap",
         dependencies = {
