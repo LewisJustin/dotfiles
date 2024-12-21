@@ -27,6 +27,7 @@ theme.wallpaper                                 = function(s)
         return theme.dir .. "/wall" .. wallnum .. ".jpg"
     end
 end--theme.dir .. "/wall.jpg"
+
 -- theme.vertwallpaper                             = theme.dir .. "/vertwall.jpg"
 theme.font                                      = "JetBrainsMono Nerd Font 10.5"
 theme.taglist_fg_focus                          = "#d88166"

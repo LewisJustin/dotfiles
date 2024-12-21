@@ -10,10 +10,10 @@ return { { -- formatter
         }
     end,
     config = function()
-    -- format buffer
-    vim.keymap.set("v", "<leader>f", function()
-        vim.lsp.buf.format()
-    end)
+        -- format buffer
+        vim.keymap.set("v", "<leader>f", function()
+            vim.lsp.buf.format()
+        end)
     end,
 }, {
         "mfussenegger/nvim-dap",

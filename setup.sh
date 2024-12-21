@@ -62,7 +62,41 @@ layout() {
     fi
 }
 
-setup_symlinks
-install_packages
-layout
+setup_nas_share () {
+    echo "setting up /etc/fstab"
+    echo "//10.0.0.110/share /media/share cifs credentials=/etc/samba/smbcredentials,uid=smbuser,gid=smbuser,file_mode=0770,dir_mode=0770,noperm 0 0" \
+        >> /etc/fstab
+
+    echo "setting up mount point"
+    sudo mkdir /etc/samba
+    sudo mkdir /mount
+
+    sudo pacman -S cifs-utils
+
+    echo "username=justin" > /etc/samba/smbcredentials
+    echo "password=JxmMR467" >> /etc/samba/smbcredentials
+
+    echo "mounting"
+    sudo mount -a
+}
+
+setup_lightdm() {
+    echo "Installing lightdm slick greeter..."
+    yay -S lightdm-slick-greeter
+
+    sudo cp ./.config/rofi/images/h.jpg /usr/share/pixmaps/greeter-user-bg.jpg
+    sudo cp ./.config/rofi/images/g.png /usr/share/pixmaps/greeter-bg.png
+
+    # set lightdm greeter to slick-greeter
+    sed -ir "s/^#(greeter-session=).*$/\\1lightdm-slick-greeter/" /etc/lightdm/lightdm.conf
+
+    # set lightdm.conf to setup the proper monitor
+    sed -ir "s/(\[SeatDefaults\])/\\1\ndisplay-setup-script=\/home\/justin\/.dotfiles\/screenlayout\/layout.sh\nsession-setup-script=\/home\/justin\/.dotfiles\/screenlayout\/layout.sh/" /etc/lightdm/lightdm.conf
+}
+
+# setup_symlinks
+# install_packages
+# setup_nas_share 
+# layout
+setup_lightdm
 echo "Done!"

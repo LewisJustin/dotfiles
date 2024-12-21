@@ -1,4 +1,5 @@
 -- KEYBINDS SET IN ../init.lua
+
 return {
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -11,13 +12,21 @@ return {
         "hrsh7th/nvim-cmp",
         "L3MON4D3/LuaSnip",
         "saadparwaiz1/cmp_luasnip",
-        -- "j-hui/fidget.nvim", -- UI diagnostics of what's going on
+        { -- sets up vim global var
+            "folke/lazydev.nvim",
+            ft = "lua", -- only load on lua files
+            opts = {
+                library = {
+                    { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+                },
+            },
+        },
     },
     config = function()
         -- keybind to kill lsp
         vim.keymap.set("n", "<leader>lk",
             function()
-                local clients = vim.lsp.get_active_clients()
+                local clients = vim.lsp.get_clients()
 
                 for _, client in pairs(clients) do
                     client.stop()
@@ -60,8 +69,17 @@ return {
                         settings = {
                             Lua = {
                                 diagnostics = {
-                                    globals = { "vim", "it", "describe", "before_each", "after_each" }
-                                }
+                                    globals = { "it", "describe", "before_each", "after_each",
+                                    "awesome", "client", "screen", "root", "tag"}
+                                },
+                                workspace = {
+                                    library = {
+                                        '/usr/share/nvim/runtime/lua',
+                                        '/usr/share/nvim/runtime/lua/lsp',
+                                        '/usr/share/awesome/lib'
+                                    },
+                                },
+                                telemetry = { enable = false },
                             }
                         }
                     })
@@ -104,7 +122,6 @@ return {
                 focusable = false,
                 style = "minimal",
                 border = "rounded",
-                source = "always",
                 header = "",
                 prefix = ""
             }
