@@ -28,6 +28,7 @@ setup_symlinks() {
     mklink .config/xkb
     mklink .clang-format
     mklink .bashrc
+    mklink .Xresources
 }
 
 install_packages() {
@@ -84,14 +85,17 @@ setup_lightdm() {
     echo "Installing lightdm slick greeter..."
     yay -S lightdm-slick-greeter
 
-    sudo cp ./.config/rofi/images/h.jpg /usr/share/pixmaps/greeter-user-bg.jpg
+    # sudo cp ./.config/rofi/images/h.jpg /usr/share/pixmaps/greeter-user-bg.jpg
     sudo cp ./.config/rofi/images/g.png /usr/share/pixmaps/greeter-bg.png
 
     # set lightdm greeter to slick-greeter
-    sed -ir "s/^#(greeter-session=).*$/\\1lightdm-slick-greeter/" /etc/lightdm/lightdm.conf
+    sudo sed -ri "s/^#(greeter-session=).*$/\\1lightdm-slick-greeter/" /etc/lightdm/lightdm.conf
 
     # set lightdm.conf to setup the proper monitor
-    sed -ir "s/(\[SeatDefaults\])/\\1\ndisplay-setup-script=\/home\/justin\/.dotfiles\/screenlayout\/layout.sh\nsession-setup-script=\/home\/justin\/.dotfiles\/screenlayout\/layout.sh/" /etc/lightdm/lightdm.conf
+    sudo sed -ri "s/(\[SeatDefaults\])/\\1\ndisplay-setup-script=\/home\/justin\/.dotfiles\/screenlayout\/layout.sh\nsession-setup-script=\/home\/justin\/.dotfiles\/screenlayout\/layout.sh/" /etc/lightdm/lightdm.conf
+
+    sudo echo "[Greeter]" > /etc/lightdm/slick-greeter.conf
+    sudo echo "background=/usr/share/pixmaps/greeter-bg.png" > /etc/lightdm/slick-greeter.conf
 }
 
 # setup_symlinks
