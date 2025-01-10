@@ -29,7 +29,8 @@ theme.wallpaper                                 = function(s)
 end--theme.dir .. "/wall.jpg"
 
 -- theme.vertwallpaper                             = theme.dir .. "/vertwall.jpg"
-theme.font                                      = "JetBrainsMono Nerd Font 10.5"
+theme.font                                      = "JetBrainsMono Nerd Font"
+theme.taglist_font                              = "JetBrainsMono Nerd Font"
 theme.taglist_fg_focus                          = "#d88166"
 theme.tasklist_bg_focus                         = "#140c0b"
 theme.tasklist_fg_focus                         = "#d88166"
@@ -105,7 +106,7 @@ mytextclock.font = theme.font
 theme.cal = lain.widget.cal({
     attach_to = { mytextclock },
     notification_preset = {
-        font = "Terminus 11",
+        font = "JetBrainsMono Nerd Font",
         fg   = theme.fg_normal,
         bg   = theme.bg_normal
     }
@@ -135,8 +136,8 @@ theme.mail = lain.widget.imap({
 -- MPD
 theme.mpd = lain.widget.contrib.moc({
     settings = function()
-        artist = moc_now.artist .. " | "
-        title  = moc_now.title
+        local artist = moc_now.artist .. " | "
+        local title  = moc_now.title
 
         -- Function to remove text within parentheses
         local function remove_text_in_parentheses(str)
@@ -181,31 +182,33 @@ local mem = lain.widget.mem({
 })
 
 -- ALSA volume
-theme.volume = lain.widget.pulsebar({
+theme.volume = lain.widget.alsabar({
     ticks=true,
     ticks_size=2,
     width=40,
-    cmd = "pactl list sinks | grep \"$(pactl get-default-sink)\" -A 8 | sed \"s/Description/device.string/\" | sed \"s/Mute/muted/\""
+    -- cmd = "pactl list sinks | grep \"$(pactl get-default-sink)\" -A 8 | sed \"s/Description/device.string/\" | sed \"s/Mute/muted/\""
 })
 
 theme.volume.bar:buttons(awful.util.table.join(
     awful.button({}, 1, function() -- left click
-        awful.spawn("pavucontrol")
-    end),
-    awful.button({}, 2, function() -- middle click
-        os.execute(string.format("pactl set-sink-volume %d 100%%", theme.volume.device))
+        -- toggle mute
+        awful.spawn("amixer set Master toggle")
         theme.volume.update()
     end),
+    awful.button({}, 2, function() -- middle click
+        -- not sure what to do yet
+    end),
     awful.button({}, 3, function() -- right click
-        os.execute(string.format("pactl set-sink-mute %d toggle", theme.volume.device))
+        -- maybe helpful if the volume is low but we want it maximized?
+        awful.spawn("amixer set Master 100%")
         theme.volume.update()
     end),
     awful.button({}, 4, function() -- scroll up
-        os.execute(string.format("pactl set-sink-volume %d +1%%", theme.volume.device))
+        awful.spawn("amixer set Master 1%+")
         theme.volume.update()
     end),
     awful.button({}, 5, function() -- scroll down
-        os.execute(string.format("pactl set-sink-volume %d -1%%", theme.volume.device))
+        awful.spawn("amixer set Master 1%-")
         theme.volume.update()
     end)
 ))
@@ -214,8 +217,8 @@ theme.volume.bar:buttons(awful.util.table.join(
 local mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- Separators
-local first = wibox.widget.textbox(markup.font("Terminus 4", " "))
-local spr   = wibox.widget.textbox(' ')
+local first = wibox.widget.textbox(markup.font("JetBrainsMono Nerd Font 4", " "))
+local spr   = first -- wibox.widget.textbox(' ')
 
 local function update_txt_layoutbox(s)
     -- Writes a string representation of the current layout in a textbox widget

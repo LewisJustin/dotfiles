@@ -3,40 +3,60 @@
 # create symlink
 # @param $1 source relative to $HOME
 mklink () {
-	# use the second argument, if it exists
-	target=$HOME/${2-$1}
-	if [[ -L $target ]]; then
-		echo "Found existing symlink at" $target
-	# else
-		if [[ -e $target.bak ]]; then
-			mv -vi $target.bak.bak $target
-		fi
-		ln -svi $HOME/.dotfiles/$1 $target
-	fi
+    target=$HOME/${2-$1}  # Use $2 if provided, otherwise fall back to $1
+
+    if [[ -e $target || -L $target ]]; then
+        # If the target exists (either a regular file or symlink), handle it
+        echo "Found existing target at" $target
+
+        # Backup if it's a regular file (not a symlink)
+        # if [[ -e $target && ! -L $target ]]; then
+        #     mv -vi $target $target.bak
+        # fi
+
+        # Remove any existing symlink or file (if it's a symlink or file)
+        rm -vi $target
+    fi
+
+    # Create the symlink
+    echo "Linking $HOME/.dotfiles/$1 to $target"
+    ln -svi $HOME/.dotfiles/$1 $target
 }
 
 setup_symlinks() {
     echo "Creating symlinks..."
-    mklink .config/alacritty
-    mklink .config/awesome
-    mklink .config/nvim
-    mklink .config/tmux
-    mklink .config/i3
-    mklink .config/picom
-    mklink .config/ranger
-    mklink .config/rofi
-    mklink .config/xkb
-    mklink .clang-format
-    mklink .bashrc
-    mklink .Xresources
+    # mklink .config/st
+    # mklink .config/dwm
+    # mklink .config/alacritty
+    # mklink .config/awesome
+    # mklink .config/nvim
+    # mklink .config/tmux
+    # mklink .config/i3
+    # mklink .config/picom
+    # mklink .config/ranger
+    # mklink .config/rofi
+    # mklink .config/xkb
+    # mklink .clang-format
+    # mklink .bashrc
+    # mklink .Xresources
 }
 
 install_packages() {
+    echo "Installing yay..."
+    git clone https://aur.archlinux.org/yay.git
+    cd yay
+    makepkg -si
+    cd ..
+    rm -rf yay
+
     echo "Updating & Installing tools..."
-    sudo pacman -Syu --needed feh fzf go alacritty awesome nvim tmux i3 picom ranger rofi curl
+    sudo pacman -Syu feh fzf go alacritty awesome neovim tmux i3 picom ranger rofi curl
 
     echo "Installing rust..."
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+    echo "Installing rust..."
+    sudo pacman -S --needed git base-devel
 }
 
 
@@ -98,9 +118,9 @@ setup_lightdm() {
     sudo echo "background=/usr/share/pixmaps/greeter-bg.png" > /etc/lightdm/slick-greeter.conf
 }
 
-# setup_symlinks
 # install_packages
+# setup_symlinks
 # setup_nas_share 
 # layout
-setup_lightdm
+# setup_lightdm
 echo "Done!"

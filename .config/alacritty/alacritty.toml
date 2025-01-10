@@ -129,28 +129,25 @@ color = "#F5E0DC"
 # render_timer = false
  
 [font]
-size = 12.0
+size = 10.0
 # use_thin_strokes = true
 
 [font.bold]
-family = "JetBrainsMono Nerd Font"
+family = "terminal-font"
 style = "Medium"
-
-# [font.glyph_offset]
-# x = 0
-# y = 0
-# 
 [font.italic]
-family = "JetBrainsMono Nerd Font"
+family = "terminal-font"
 style = "Light Italic"
-
 [font.normal]
-family = "JetBrainsMono Nerd Font"
+family = "terminal-font"
 style = "Regular"
-
-[font.offset]
+[font.glyph_offset]
 x = 0
 y = 0
+
+# [font.offset]
+# x = 2
+# y = 1
 # 
 # [[keyboard.bindings]]
 # action = "Paste"
@@ -465,9 +462,9 @@ y = 0
 # save_to_clipboard = false
 # semantic_escape_chars = ",│`|:\"' ()[]{}<>"
 # 
-# [shell]
+# [terminal.shell]
 # args = ["--command=tmux"]
-# program = "/bin/bash"
+# program = "/usr/bin/zsh"
 # 
 [window]
 # decorations = "buttonless"
@@ -479,6 +476,6 @@ opacity = 0.9
 # columns = 100
 # lines = 85
 # 
-# [window.padding]
-# x = 0
+[window.padding]
+x = 5
 # y = 0

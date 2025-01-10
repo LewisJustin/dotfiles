@@ -3,9 +3,11 @@ return {
     -- build = ":TSUpdate",
     config = function()
         require("nvim-treesitter.configs").setup({
+            modules = {},
+            ignore_install = {},
             -- A list of parser names, or "all"
             ensure_installed = {
-                "vimdoc", "javascript", "typescript", "c", "lua", "rust",
+                "javascript", "typescript", "c", "lua", "rust",
                 "jsdoc", "bash",
             },
 
