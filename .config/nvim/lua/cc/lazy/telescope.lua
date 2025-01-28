@@ -1,6 +1,10 @@
 return {
     "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = { {
+        "nvim-lua/plenary.nvim",
+        -- opts = {rocks = {hererocks = false}},
+    },
+    },
     config = function()
         require("telescope").setup({})
         local opts = { noremap = true, silent = true }

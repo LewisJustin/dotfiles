@@ -19,7 +19,8 @@ export PYTHONSTARTUP="$XDG_CONFIG_HOME"/python/pythonrc
 [[ $- != *i* ]] && return
 
 alert() {
-    awesome-client "require('naughty').notify({text='$1', preset=require('naughty').config.presets.critical, timeout=3})"
+    # awesome-client "require('naughty').notify({text='$1', preset=require('naughty').config.presets.critical, timeout=3})"
+    notify-send "$1"
 }
 
 alias ls='ls --color=auto'

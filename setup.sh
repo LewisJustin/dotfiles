@@ -25,20 +25,38 @@ mklink () {
 
 setup_symlinks() {
     echo "Creating symlinks..."
-    # mklink .config/st
-    # mklink .config/dwm
-    # mklink .config/alacritty
-    # mklink .config/awesome
-    # mklink .config/nvim
-    # mklink .config/tmux
-    # mklink .config/i3
-    # mklink .config/picom
-    # mklink .config/ranger
-    # mklink .config/rofi
-    # mklink .config/xkb
-    # mklink .clang-format
-    # mklink .bashrc
-    # mklink .Xresources
+    mklink .config/st
+    mklink .config/dwm
+    mklink .config/alacritty
+    mklink .config/awesome
+    mklink .config/nvim
+    mklink .config/tmux
+    mklink .config/i3
+    mklink .config/picom
+    mklink .config/ranger
+    mklink .config/rofi
+    mklink .config/xkb
+    mklink .clang-format
+    mklink .bashrc
+    mklink .fonts.conf
+    mklink .Xresources
+
+    # since .bashrc requires a specific folder for it's history to
+    # work:
+    mkdir -p ~/.local/state/bash
+    touch ~/.local/state/bash/history
+
+}
+
+setup_fonts() {
+    mklink fonts/fonts.conf .fonts.conf
+    mkdir -p ~/.local/share/fonts
+
+    echo "Setting up custom terminal-font"
+    echo "terminal-font primary font is 0xProto fixed"
+    unzip ./fonts/0xProto.zip -d ~/.local/share/fonts/
+
+    fc-cache -r
 }
 
 install_packages() {
@@ -119,7 +137,7 @@ setup_lightdm() {
 }
 
 # install_packages
-# setup_symlinks
+setup_fonts
 # setup_nas_share 
 # layout
 # setup_lightdm
