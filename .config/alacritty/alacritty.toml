@@ -129,7 +129,7 @@ color = "#F5E0DC"
 # render_timer = false
  
 [font]
-size = 13.0
+size = 12.0
 # use_thin_strokes = true
 
 [font.bold]

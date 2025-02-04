@@ -25,36 +25,35 @@ mklink () {
 
 setup_symlinks() {
     echo "Creating symlinks..."
-    mklink .config/st
-    mklink .config/dwm
-    mklink .config/alacritty
-    mklink .config/awesome
-    mklink .config/nvim
-    mklink .config/tmux
+    # mklink .config/st
+    # mklink .config/dwm
+    # mklink .config/alacritty
+    # mklink .config/awesome
+    # mklink .config/nvim
+    # mklink .config/tmux
     mklink .config/i3
-    mklink .config/picom
-    mklink .config/ranger
-    mklink .config/rofi
-    mklink .config/xkb
-    mklink .clang-format
-    mklink .bashrc
-    mklink .fonts.conf
-    mklink .Xresources
+    # mklink .config/picom
+    # mklink .config/ranger
+    # mklink .config/rofi
+    # mklink .config/xkb
+    # mklink .clang-format
+    # mklink .bashrc
+    # mklink .Xresources
 
     # since .bashrc requires a specific folder for it's history to
     # work:
-    mkdir -p ~/.local/state/bash
-    touch ~/.local/state/bash/history
+    # mkdir -p ~/.local/state/bash
+    # touch ~/.local/state/bash/history
 
 }
 
 setup_fonts() {
     mklink fonts/fonts.conf .fonts.conf
-    mkdir -p ~/.local/share/fonts
+    # mkdir -p ~/.local/share/fonts
 
-    echo "Setting up custom terminal-font"
-    echo "terminal-font primary font is 0xProto fixed"
-    unzip ./fonts/0xProto.zip -d ~/.local/share/fonts/
+    # echo "Setting up custom terminal-font"
+    # echo "terminal-font primary font is 0xProto fixed"
+    # unzip ./fonts/0xProto.zip -d ~/.local/share/fonts/
 
     fc-cache -r
 }
@@ -68,13 +67,10 @@ install_packages() {
     rm -rf yay
 
     echo "Updating & Installing tools..."
-    sudo pacman -Syu feh fzf go alacritty awesome neovim tmux i3 picom ranger rofi curl
+    # sudo pacman -Syu feh fzf go alacritty awesome neovim tmux i3 picom ranger rofi curl git networkmanager unzip
 
     echo "Installing rust..."
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
-    echo "Installing rust..."
-    sudo pacman -S --needed git base-devel
 }
 
 
@@ -121,7 +117,7 @@ setup_nas_share () {
 
 setup_lightdm() {
     echo "Installing lightdm slick greeter..."
-    yay -S lightdm-slick-greeter
+    # yay -S lightdm-slick-greeter
 
     # sudo cp ./.config/rofi/images/h.jpg /usr/share/pixmaps/greeter-user-bg.jpg
     sudo cp ./.config/rofi/images/g.png /usr/share/pixmaps/greeter-bg.png
@@ -136,8 +132,9 @@ setup_lightdm() {
     sudo echo "background=/usr/share/pixmaps/greeter-bg.png" > /etc/lightdm/slick-greeter.conf
 }
 
+setup_symlinks
 # install_packages
-setup_fonts
+# setup_fonts
 # setup_nas_share 
 # layout
 # setup_lightdm
