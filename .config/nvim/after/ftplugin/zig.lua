@@ -1,0 +1,6 @@
+vim.keymap.set("n", "<leader>rc", function()
+    RunInFloat("%!zig build run")
+end)
+vim.keymap.set("n", "<leader>tc", function()
+    RunInFloat("%!zig build test")
+end)

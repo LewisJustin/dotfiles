@@ -31,6 +31,6 @@ function RunInFloat(arg)
     local buf = createBuffer()
     vim.api.nvim_open_win(buf, true, window_config())
     vim.api.nvim_command(arg)
-    vim.api.nvim_buf_set_option(buf, "modifiable", false)
+    vim.api.nvim_set_option_value("modifiable", false, {buf = buf})
 end
 
